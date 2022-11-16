@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
+import dj_database_url
 import os
 from pathlib import Path
 
@@ -20,24 +21,29 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-1xvca=!=&e)#1f7t$8qpa-9p03b@mt^0)1^)e^ncs9xq30+do9'
+SECRET_KEY = os.environ.get(
+    'SECRET_KEY', default='LT1f1O147kgvDZUH5LUxY3mzWoFa/w8/cb8nSy2flq0=')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = 'RENDER' not in os.environ
 
 ALLOWED_HOSTS = []
+
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'bitcoin_api.apps.BitcoinApiConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'bitcoin_api',
     'rest_framework',
     'corsheaders',
 ]
@@ -76,12 +82,12 @@ WSGI_APPLICATION = 'carefi_assign.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        # Feel free to alter this value to suit your needs.
+        default='postgres://assign_user:ghj8kIWbdSOa0hToHfKTYjQgXXdCia2I@dpg-cdpqgs2en0hugus1bb00-a/assign',
+        conn_max_age=600
+    )
 }
 
 
@@ -125,44 +131,44 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-AUTH_USER_MODEL='bitcoin_api.CustomUser'
+AUTH_USER_MODEL = 'bitcoin_api.CustomUser'
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 
 
 LOGGING = {
-'version': 1,
-'disable_existing_loggers': False,
-'formatters': {
-    'colored': {
-        '()': 'colorlog.ColoredFormatter',
-        'format': "%(log_color)s %(levelname)-8s %(asctime)s %(module)s %(reset)s %(blue)s%(message)s",
-        'log_colors':{
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'colored': {
+            '()': 'colorlog.ColoredFormatter',
+            'format': "%(log_color)s %(levelname)-8s %(asctime)s %(module)s %(reset)s %(blue)s%(message)s",
+            'log_colors': {
                 'DEBUG':    'blue',
                 'INFO':     'green',
                 'WARNING':  'yellow',
                 'ERROR':    'red',
                 'CRITICAL': 'red,bg_white',
+            },
+        },
+
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'colored'
         },
     },
-
-},
-'handlers': {
-    'console': {
-        'class': 'logging.StreamHandler',
-        'formatter': 'colored'
-    },
-},
-'root': {
-    'handlers': ['console'],
-    'level': 'WARNING',
-},
-'loggers': {
-    'django': {
+    'root': {
         'handlers': ['console'],
-        'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
-        'propagate': False,
-     },
-  },
+        'level': 'WARNING',
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+            'propagate': False,
+        },
+    },
 }
