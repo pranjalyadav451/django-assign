@@ -6,7 +6,7 @@ authors = ["Your Name <you@example.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.8,10"
+python = "^3.8"
 dj-database-url = "^1.0.0"
 psycopg2-binary = "^2.9.5"
 django = "^4.1.3"
