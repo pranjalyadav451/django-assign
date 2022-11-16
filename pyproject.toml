@@ -17,6 +17,7 @@ djangorestframework = "^3.14.0"
 pyjwt = "^2.6.0"
 autopep8 = "^2.0.0"
 colorlog = "^6.7.0"
+whitenoise = {extras = ["brotli"], version = "^6.2.0"}
 
 
 [build-system]
