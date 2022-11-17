@@ -18,7 +18,7 @@ class Bitcoin(models.Model):
 
 class CustomUser(AbstractUser):
     username = models.CharField(
-        max_length=50, unique=True, blank=False, null=False)
+        max_length=100, unique=True, blank=False, null=False)
     email = models.EmailField(
-        max_length=50, unique=True, blank=False, null=False)
-    password = models.CharField(max_length=50, null=False, blank=False)
+        max_length=100, unique=True, blank=False, null=False)
+    password = models.CharField(max_length=100, null=False, blank=False)
