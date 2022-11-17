@@ -96,10 +96,18 @@ WSGI_APPLICATION = 'carefi_assign.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
+
+# RENDER_POSTGRES_USER = os.environ.get('RENDER_POSTGRES_USER')
+# RENDER_POSTGRES_HOSTNAME = os.environ.get('RENDER_POSTGRES_HOSTNAME')
+# RENDER_POSTGRES_PASSWORD = os.environ.get('RENDER_POSTGRES_PASSWORD')
+# RENDER_POSTGRES_DB = os.environ.get('RENDER_POSTGRES_DB')
+
+RENDER_DATABASE_URL = os.environ.get('RENDER_DATABASE_URL')
+
 DATABASES = {
     'default': dj_database_url.config(
         # Feel free to alter this value to suit your needs.
-        default='postgres://assign_user:ghj8kIWbdSOa0hToHfKTYjQgXXdCia2I@dpg-cdpqgs2en0hugus1bb00-a/assign',
+        default=RENDER_DATABASE_URL,
         conn_max_age=600
     )
 }
