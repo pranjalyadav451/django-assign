@@ -65,11 +65,10 @@ class BitcoinViewSet(viewsets.ModelViewSet):
 class RegisterView(views.APIView):
 
     def post(self, request):
+        print("request.data", request.data)
         serializer = UserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        user = CustomUser(**serializer.validated_data)
-        user.set_password(request.data['password'])
-        user.save()
+        serializer.save()
         return Response({
             "message": "Regisration Successful",
         }, status=status.HTTP_201_CREATED)
