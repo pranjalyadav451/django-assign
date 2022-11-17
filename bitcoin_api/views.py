@@ -1,7 +1,7 @@
-from rest_framework import viewsets,views
+from rest_framework import viewsets, views
 from carefi_assign.settings import SECRET_KEY
 
-from .models import Bitcoin,CustomUser
+from .models import Bitcoin, CustomUser
 from .serializers import BitcoinSerializer, UserSerializer
 
 from rest_framework.response import Response
@@ -10,7 +10,8 @@ from rest_framework import status
 from .paginations import CustomPagination
 
 from rest_framework.exceptions import AuthenticationFailed
-import datetime, jwt
+import datetime
+import jwt
 import requests
 
 
@@ -30,7 +31,6 @@ class BitcoinViewSet(viewsets.ModelViewSet):
         except jwt.ExpiredSignatureError:
             raise AuthenticationFailed('Unauthenticated!')
 
-
         created_by_user = CustomUser.objects.get(id=payload['id'])
 
         if created_by_user is None:
@@ -44,29 +44,35 @@ class BitcoinViewSet(viewsets.ModelViewSet):
         bitcoin.save()
 
         serializer = BitcoinSerializer(bitcoin)
-        return Response(serializer.data,status=status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     # def list(self, request, *args, **kwargs):
         # return Response({"message":"Hello World"}, status=status.HTTP_200_OK)
 
     def destroy(self, request, *args, **kwargs):
         pass
+
     def create(self, request, *args, **kwargs):
         pass
+
     def update(self, request, *args, **kwargs):
         pass
+
     def partial_update(self, request, *args, **kwargs):
         pass
 
+
 class RegisterView(views.APIView):
+
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save()
+        user = CustomUser(**serializer.validated_data)
+        user.set_password(request.data['password'])
+        user.save()
         return Response({
-            'message':'User creation successful.',
-            'data':serializer.data
-        },status=status.HTTP_201_CREATED)
+            "message": "Regisration Successful",
+        }, status=status.HTTP_201_CREATED)
 
 
 class LoginView(views.APIView):
@@ -91,7 +97,7 @@ class LoginView(views.APIView):
 
         response.set_cookie(key='jwt', value=token, httponly=True)
         response.data = {
-            'message':"Login Successful."
+            'message': "Login Successful."
         }
         return response
 
@@ -104,4 +110,3 @@ class LogoutView(views.APIView):
             'message': 'Logout Successful.'
         }
         return response
-
