@@ -5,6 +5,8 @@ set -o errexit
 poetry install
 
 python manage.py collectstatic --no-input
+python manage.py reset_db --noinput
+
 python manage.py makemigrations
 python manage.py migrate auth
 python manage.py migrate --run-syncdb
