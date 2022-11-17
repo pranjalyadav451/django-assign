@@ -99,7 +99,7 @@ WSGI_APPLICATION = 'carefi_assign.wsgi.application'
 DATABASES = {
     'default': dj_database_url.config(
         # Feel free to alter this value to suit your needs.
-        default='postgres://assign_user:ghj8kIWbdSOa0hToHfKTYjQgXXdCia2I@dpg-cdpqgs2en0hugus1bb00-a.singapore-postgres.render.com/assign',
+        default='postgres://assign_user:ghj8kIWbdSOa0hToHfKTYjQgXXdCia2I@dpg-cdpqgs2en0hugus1bb00-a/assign',
         conn_max_age=600
     )
 }
