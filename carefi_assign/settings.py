@@ -107,6 +107,7 @@ DATABASE_URL = os.environ.get('DATABASE_URL')
 DATABASES = {
     'default': dj_database_url.config(
         # Feel free to alter this value to suit your needs.
+        engine='django.db.backends.postgresql_psycopg2',
         default=DATABASE_URL,
         conn_max_age=600
     )
