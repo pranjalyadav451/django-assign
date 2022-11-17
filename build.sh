@@ -9,4 +9,5 @@ python manage.py makemigrations
 python manage.py migrate auth
 python manage.py migrate --run-syncdb
 pip install --upgrade pip
+python manage.py showmigrations
 pip install --force-reinstall -U setuptools
