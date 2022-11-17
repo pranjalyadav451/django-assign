@@ -1,6 +1,6 @@
 databases:
   - name: assign
-    databaseName: assign
+    databaseName: assign_4cwm
     user: assign_user
 
 services:
