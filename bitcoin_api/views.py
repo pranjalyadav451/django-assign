@@ -1,5 +1,5 @@
 from rest_framework import viewsets, views
-from carefi_assign.settings import SECRET_KEY
+from carefi_assign.settings import SECRET_KEY, TOKEN_EXPIRES_IN
 
 from .models import Bitcoin, CustomUser
 from .serializers import BitcoinSerializer, UserSerializer
@@ -87,7 +87,7 @@ class LoginView(views.APIView):
 
         payload = {
             'id': user.id,
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60),
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=TOKEN_EXPIRES_IN),
             'iat': datetime.datetime.utcnow()
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
