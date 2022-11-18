@@ -9,7 +9,7 @@
 - Database Used - PostgreSQL
 - [Hosted App](https://assign-pvvo.onrender.com/)
 - [GitHub Repo Link](https://github.com/pranjalyadav451/django-assign)
-- Postman Collection Link - [![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/18240868-d648b179-ccde-4a37-a258-2ca5dbac6bbd)
+- [![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/18240868-d648b179-ccde-4a37-a258-2ca5dbac6bbd)
 
 ## Features Built
 
